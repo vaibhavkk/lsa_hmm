@@ -31,8 +31,7 @@ is_conjunction = lambda pos: (pos[:2] == 'CC' or pos[:2]=='IN')
 is_interjection = lambda pos: pos[:2] == 'UH'
 #do the nlp stuff 
 
-
-
+text = text.decode('utf-8')
 tokenized = nltk.word_tokenize(text)
 tagged =  nltk.pos_tag(tokenized)
 tagged.append(('END','END'))
@@ -78,7 +77,6 @@ print '\nThe adjectives are :===>' , adjectives
 #############################################################################################
 #find synonym and antonym of all forms of words 
 
-
 from nltk.corpus import wordnet as wn 
 
 #("\nEnter which form's synonyms are to be found : ")
@@ -87,11 +85,11 @@ q = nouns
 synonyms = []
 antonyms = []
 for word_q in q :
+#	for syn in wn.synsets(word_q) :
+# the loop is to be noticed. It uses new nltk
 	for syn in wn.synsets(word_q) :
-	    for l in syn.lemmas :
-        	synonyms.append(l.name)
-#	        if l.antonyms() :
-#        	    antonyms.append(l.antonyms()[0].name)
+	    for l in syn.lemmas() :
+        	synonyms.append(str(l.name()))
 
 #synonyms = np.unique(synonyms).tolist()
 #print("Synonyms are of ",q , "are ==> \n",synonyms)
@@ -101,6 +99,7 @@ forms_frequency = Counter(synonyms)
 #print "Most common are : "
 #print forms_frequency.most_common(10)
 frequent_nouns = forms_frequency.most_common(10)
+similar_nouns = forms_frequency
 
 #############################################################################
 #print("\nTop 10 commons adjectives are : ")
@@ -109,10 +108,8 @@ synonyms = []
 antonyms = []
 for word_q in q :
 	for syn in wn.synsets(word_q) :
-	    for l in syn.lemmas :
-        	synonyms.append(l.name)
-#	        if l.antonyms() :
-#        	    antonyms.append(l.antonyms()[0].name)
+	    for l in syn.lemmas() :
+        	synonyms.append(str(l.name()))
 
 #synonyms = np.unique(synonyms).tolist()
 #print("Synonyms are of ",q , "are ==> \n",synonyms)
@@ -122,6 +119,7 @@ forms_frequency = Counter(synonyms)
 #print "Most common are : "
 #print forms_frequency.most_common(10)
 frequent_adjectives = forms_frequency.most_common(10)
+similar_adjectives = forms_frequency
 ###################################################################################
 #print("\nTop 10 commons pronouns are : ")
 q = pronouns
@@ -129,10 +127,8 @@ synonyms = []
 antonyms = []
 for word_q in q :
 	for syn in wn.synsets(word_q) :
-	    for l in syn.lemmas :
-        	synonyms.append(l.name)
-#	        if l.antonyms() :
-#        	    antonyms.append(l.antonyms()[0].name)
+	    for l in syn.lemmas() :
+        	synonyms.append(str(l.name()))
 
 #synonyms = np.unique(synonyms).tolist()
 #print("Synonyms are of ",q , "are ==> \n",synonyms)
@@ -142,6 +138,8 @@ forms_frequency = Counter(synonyms)
 #print "Most common are : "
 #print forms_frequency.most_common(10)
 frequent_pronouns = forms_frequency.most_common(10)
+similar_pronouns = forms_frequency
+
 ########################################################################################
 #print("\nTop 10 commons verbs are : ")
 q = verbs
@@ -149,10 +147,8 @@ synonyms = []
 antonyms = []
 for word_q in q :
 	for syn in wn.synsets(word_q) :
-	    for l in syn.lemmas :
-        	synonyms.append(l.name)
-#	        if l.antonyms() :
-#        	    antonyms.append(l.antonyms()[0].name)
+	    for l in syn.lemmas() :
+        	synonyms.append(str(l.name()))
 
 #synonyms = np.unique(synonyms).tolist()
 #print("Synonyms are of ",q , "are ==> \n",synonyms)
@@ -162,6 +158,7 @@ forms_frequency = Counter(synonyms)
 #print "Most common are : "
 #print forms_frequency.most_common(10)
 frequent_verbs = forms_frequency.most_common(10)
+similar_verbs = forms_frequency
 ########################################################################################
 #print("\nTop 10 commons adverbs are : ")
 q = adverbs
@@ -169,10 +166,8 @@ synonyms = []
 antonyms = []
 for word_q in q :
 	for syn in wn.synsets(word_q) :
-	    for l in syn.lemmas :
-        	synonyms.append(l.name)
-#	        if l.antonyms() :
-#        	    antonyms.append(l.antonyms()[0].name)
+	    for l in syn.lemmas() :
+        	synonyms.append(str(l.name()))
 
 #synonyms = np.unique(synonyms).tolist()
 #print("Synonyms are of ",q , "are ==> \n",synonyms)
@@ -182,6 +177,7 @@ forms_frequency = Counter(synonyms)
 #print "Most common are : "
 #print forms_frequency.most_common(10)
 frequent_adverbs = forms_frequency.most_common(10)
+similar_adverbs = forms_frequency
 ########################################################################################
 #print("\nTop 10 commons Conjunctions are : ")
 q = conjunctions
@@ -189,10 +185,8 @@ synonyms = []
 antonyms = []
 for word_q in q :
 	for syn in wn.synsets(word_q) :
-	    for l in syn.lemmas :
-        	synonyms.append(l.name)
-#	        if l.antonyms() :
-#        	    antonyms.append(l.antonyms()[0].name)
+	    for l in syn.lemmas() :
+        	synonyms.append(str(l.name()))
 
 #synonyms = np.unique(synonyms).tolist()
 #print("Synonyms are of ",q , "are ==> \n",synonyms)
@@ -202,7 +196,7 @@ forms_frequency = Counter(synonyms)
 #print "Most common are : "
 #print forms_frequency.most_common(10)
 frequent_conjunctions = forms_frequency.most_common(10)
-
+similar_conjunctions = forms_frequency
 
 ##########################################################################################
 #print("\nTop 10 commons Interjections are : ")
@@ -211,10 +205,8 @@ synonyms = []
 antonyms = []
 for word_q in q :
 	for syn in wn.synsets(word_q) :
-	    for l in syn.lemmas :
-        	synonyms.append(l.name)
-#	        if l.antonyms() :
-#        	    antonyms.append(l.antonyms()[0].name)
+	    for l in syn.lemmas() :
+        	synonyms.append(str(l.name()))
 
 #synonyms = np.unique(synonyms).tolist()
 #print("Synonyms are of ",q , "are ==> \n",synonyms)
@@ -224,6 +216,7 @@ forms_frequency = Counter(synonyms)
 #print "Most common are : "
 #print forms_frequency.most_common(10)
 frequent_interjections = forms_frequency.most_common(10)
+similar_interjections = forms_frequency
 ########################################################################################
 #print("\nTop 10 commons particles are : ")
 q = particles
@@ -231,10 +224,8 @@ synonyms = []
 antonyms = []
 for word_q in q :
 	for syn in wn.synsets(word_q) :
-	    for l in syn.lemmas :
-        	synonyms.append(l.name)
-#	        if l.antonyms() :
-#        	    antonyms.append(l.antonyms()[0].name)
+	    for l in syn.lemmas() :
+        	synonyms.append(str(l.name()))
 
 #synonyms = np.unique(synonyms).tolist()
 #print("Synonyms are of ",q , "are ==> \n",synonyms)
@@ -244,18 +235,17 @@ forms_frequency = Counter(synonyms)
 #print "Most common are : "
 #print forms_frequency.most_common(10)
 frequent_particles = forms_frequency.most_common(10)
+similar_particles = forms_frequency
 #######################################################################################
-'''Not necessary. It creates complexity in determiners
-print("\nTop 10 commons determiners are : ")
+#Not necessary. It creates complexity in determiners
+#print("\nTop 10 commons determiners are : ")
 q = determiners
 synonyms = []
 antonyms = []
 for word_q in q :
 	for syn in wn.synsets(word_q) :
-	    for l in syn.lemmas :
-        	synonyms.append(l.name)
-#	        if l.antonyms() :
-#        	    antonyms.append(l.antonyms()[0].name)
+	    for l in syn.lemmas() :
+        	synonyms.append(str(l.name()))
 
 #synonyms = np.unique(synonyms).tolist()
 #print("Synonyms are of ",q , "are ==> \n",synonyms)
@@ -265,92 +255,108 @@ forms_frequency = Counter(synonyms)
 #print "Most common are : "
 #print forms_frequency.most_common(10)
 frequent_determiners = forms_frequency.most_common(10)
-'''
-print "After using wordnet and getting synonyms : "
+similar_determiners = forms_frequency
+
+
+#############################Printing stuff###############################
+###frequent synonyms (top 10)#####
 #print '\nThe frequent_determiners are :===>', frequent_determiners
-print '\nThe frequent_particles are :===>', frequent_particles
-print '\nThe frequent_conjunctions or prepositions are :===> ', frequent_conjunctions
-print '\nThe frequent_interjections are :===> ', frequent_interjections
-print '\nThe frequent_nouns are :===>' ,  frequent_nouns
-print '\nThe frequent_pronouns are :===>' ,  frequent_pronouns
-print '\nThe frequent_verbs are :===>' , frequent_verbs
-print '\nThe frequent_adverbs are :===>' , frequent_adverbs
-print '\nThe frequent_adjectives are :===>' , frequent_adjectives
+#print '\nThe frequent_particles are :===>', frequent_particles
+#print '\nThe frequent_conjunctions or prepositions are :===> ', frequent_conjunctions
+#print '\nThe frequent_interjections are :===> ', frequent_interjections
+#print '\nThe frequent_nouns are :===>' ,  frequent_nouns
+#print '\nThe frequent_pronouns are :===>' ,  frequent_pronouns
+#print '\nThe frequent_verbs are :===>' , frequent_verbs
+#print '\nThe frequent_adverbs are :===>' , frequent_adverbs
+#print '\nThe frequent_adjectives are :===>' , frequent_adjectives
 
 
+#print "After using wordnet and getting synonyms : "
+#print '\nThe simlar_determiners are :===>', similar_determiners
+#print '\nThe similar_particles are :===>', similar_particles
+#print '\nThe similar_conjunctions or prepositions are :===> ', similar_conjunctions
+#print '\nThe similar_interjections are :===> ', similar_interjections
+#print '\nThe similar_nouns are :===>' ,  similar_nouns
+#print '\nThe similar_pronouns are :===>' ,  similar_pronouns
+#print '\nThe similar_verbs are :===>' , similar_verbs
+#print '\nThe similar_adverbs are :===>' , similar_adverbs
+#print '\nThe similar_adjectives are :===>' , similar_adjectives
+
+#######################Tagging on similar forms #########################################
 
 
-
-
-########## LSA on sentence #######################
-##LSA is applied on a dataset we can't apply it on a sentence. We need corpus for LSA.
-'''
-from sklearn.datasets import load_files
-from sklearn.feature_extraction import text
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-#from nltk.stem import SnowballStemmer
-from nltk.stem import PorterStemmer
-import csv
-from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.decomposition import TruncatedSVD
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import Normalizer
-from numpy.linalg import svd
-from numpy import *
-import pylab
-import numpy
-
-
-bbcdata = text
-
-stemmer = PorterStemmer()
-class StemmedCountVectorizer(CountVectorizer):
-        def build_analyzer(self):
-                analyzer = super(StemmedCountVectorizer,self).build_analyzer()
-                return lambda doc: ([stemmer.stem(w) for w in analyzer(doc)])
-
-count_vectorizer = StemmedCountVectorizer(min_df=3, analyzer="word", stop_words=text.ENGLISH_STOP_WORDS)
-frequency_matrix = count_vectorizer.fit_transform(bbcdata)
-tfidf = bbcdata.TfidfTransformer()
-
-
-
-vocabulary = count_vectorizer.fit(bbcdata.data)
-#tfidf = TfidfTransformer()
-
-
-tfidf_matrix = tfidf.fit_transform(frequency_matrix)
-
-svd = TruncatedSVD(n_components = 4)
-lsa = make_pipeline(svd, Normalizer(copy=False))
-bbc_lsa = lsa.fit_transform(tfidf_matrix)
-
-
-#To print major features for the compone
-for compNum in range(0,4):
-        comp = svd.components_[compNum]
-        indeces = numpy.argsort(comp).tolist()
-        indeces.reverse()
-        term = [feat_names[weightIndex] for weightIndex in indeces[0:10]]
-        weights = [comp[weightIndex] for weightIndex in indeces[0:10]]
-        term.reverse()
-        weights.reverse()
-        print term
-        print weights
-        positions = pylab.arange(10)+.5
-        pylab.figure(compNum)
-        pylab.barh(positions, weights, align='center')
-        pylab.yticks(positions, term)
-        pylab.xlabel('Weight')
-        pylab.title('Strongest terms for component %d' % (compNum))
-        pylab.grid(True)
-        pylab.savefig('weight_graph'+str(compNum)+'.png')
-
-'''
-
-
-
+#############tag nouns #############################################
+index = 0
+wl = similar_nouns
+tagged_similar_nouns = []
+for w in wl :
+    tagged_similar_nouns.append((w,'NN'))
+    index = index +1
+#print "tagged_similar_nouns", tagged_similar_nouns
+#######################tag determiners############
+index = 0
+wl = similar_determiners
+tagged_similar_determiners = []
+for w in wl :
+    tagged_similar_determiners.append((w,'DT'))
+    index = index +1
+#print '\n tagged_similar_determiners',tagged_similar_determiners
+#######################tag particles 
+index = 0
+wl = similar_particles
+tagged_similar_particles = []
+for w in wl :
+    tagged_similar_particles.append((w,'RP'))
+    index = index +1
+#print '\n tagged_similar_particles',tagged_similar_particles
+#######################tag conjunctions or prepositions 
+index = 0
+wl = similar_conjunctions
+tagged_similar_conjunctions = []
+for w in wl :
+    tagged_similar_conjunctions.append((w,'CC'))
+    index = index +1
+#print '\ntagged_similar_conjunctions',tagged_similar_conjunctions
+#######################tag interjections 
+index = 0
+wl = similar_interjections
+tagged_similar_interjections = []
+for w in wl :
+    tagged_similar_interjections.append((w,'UH'))
+    index = index +1
+#print '\ntagged_similar_interjections',tagged_similar_interjections
+#######################tag pronouns 
+index = 0
+wl = similar_pronouns
+tagged_similar_pronouns = []
+for w in wl :
+    tagged_similar_pronouns.append((w,'PR'))
+    index = index +1
+#print '\ntagged_similar_pronouns',tagged_similar_pronouns
+#######################tag verbs 
+index = 0
+wl = similar_verbs
+tagged_similar_verbs = []
+for w in wl :
+    tagged_similar_verbs.append((w,'VB'))
+    index = index +1
+#print '\n',tagged_similar_verbs
+#######################tag adverbs 
+index = 0
+wl = similar_adverbs
+tagged_similar_adverbs = []
+for w in wl :
+    tagged_similar_adverbs.append((w,'RB'))
+    index = index +1
+#print '\ntagged_similar_adverbs',tagged_similar_adverbs
+#######################tag adjectives 
+index = 0
+wl = similar_adjectives
+tagged_similar_adjectives = []
+for w in wl :
+    tagged_similar_adjectives.append((w,'JJ'))
+    index = index +1
+#print '\ntagged_similar_adjectives',tagged_similar_adjectives
 
 
 
@@ -365,9 +371,14 @@ for compNum in range(0,4):
 # then all the tag/word pairs for the word/tag pairs in the sentence.
 # shorten tags to 2 characters each
 sent = tagged
+tagged.append(('END','END'))
+tagged.reverse()
+tagged.append(('START','START'))
+tagged.reverse()
+
 tagged.extend([ (tag[:2], word) for (word, tag) in sent ])
 
-
+print tagged
 
 print("++++++++++++This probabiltiy is on original text++++++++++++++++++++++")
 #conditional frequency distribution 
@@ -396,4 +407,203 @@ cpd_tags = nltk.ConditionalProbDist(cfd_tags, nltk.MLEProbDist)
 print("If we have just seen 'DT', the probability of 'NN' is", cpd_tags["DT"].prob("NN"))
 print( "If we have just seen 'VB', the probability of 'JJ' is", cpd_tags["VB"].prob("DT"))
 print( "If we have just seen 'VB', the probability of 'NN' is", cpd_tags["VB"].prob("NN"))
+
+
+print("++++++++++++++++++++++HMM on forms +++++++++++++++++++++++++++++++++++")
+
+import itertools 
+
+tagged = list(itertools.chain(tagged_similar_adjectives,tagged_similar_verbs,tagged_similar_adverbs, tagged_similar_pronouns, tagged_similar_interjections, tagged_similar_conjunctions, tagged_similar_particles, tagged_similar_determiners, tagged_similar_nouns))
+tagged.append(('END','END'))
+tagged.reverse()
+tagged.append(('START','START'))
+tagged.reverse()
+sent = tagged
+tagged.extend([ (tag[:2], word) for (word, tag) in sent ])
+print "\n============\n"
+print tagged
+print "\n============\n"
+#conditional frequency distribution 
+cfd_tagsw = nltk.ConditionalFreqDist(tagged)
+#print cfd_tags 
+# conditional probabiltiy distribution 
+cpd_tagsw = nltk.ConditionalProbDist(cfd_tagsw,nltk.MLEProbDist)
+
+print("The probability of an Noun (NN) being 'stockpile' is", cpd_tagsw['NN'].prob('stockpile'))
+print("The probability of a Adjective (JJ) being 'justify' is", cpd_tagsw['JJ'].prob('justify'))
+
+# Estimating P(ti | t{i-1}) from corpus data using Maximum Likelihood Estimation (MLE):
+# P(ti | t{i-1}) = count(t{i-1}, ti) / count(t{i-1})
+text_tags = [tag for (tag, word) in sent ]
+
+#print text_tags
+
+# make conditional frequency distribution:
+# count(t{i-1} ti)
+cfd_tagsw= nltk.ConditionalFreqDist(nltk.bigrams(text_tags))
+# make conditional probability distribution, using
+# maximum likelihood estimate:
+# P(ti | t{i-1})
+cpd_tagsw = nltk.ConditionalProbDist(cfd_tagsw, nltk.MLEProbDist)
+
+print("If we have just seen 'DT', the probability of 'NN' is", cpd_tagsw["DT"].prob("NN"))
+print( "If we have just seen 'VB', the probability of 'JJ' is", cpd_tagsw["VB"].prob("DT"))
+print( "If we have just seen 'VB', the probability of 'NN' is", cpd_tagsw["VB"].prob("NN"))
+###
+# putting things together:
+# what is the probability of the tag sequence "PP VB TO VB" for the word sequence "I want to race"?
+# It is
+# P(START) * P(PP|START) * P(I | PP) *
+#            P(VB | PP) * P(want | VB) *
+#            P(TO | VB) * P(to | TO) *
+#            P(VB | TO) * P(race | VB) *
+#            P(END | VB)
+#
+# We leave aside P(START) for now.
+
+#here we will have to replace string "I want to race" by new strings that we can get from combination of all forms of a word
+
+prob_tagsequence = cpd_tags["START"].prob("PP") * cpd_tagsw["PP"].prob("I") * \
+    cpd_tags["PP"].prob("VB") * cpd_tagsw["VB"].prob("want") * \
+    cpd_tags["VB"].prob("TO") * cpd_tagsw["TO"].prob("to") * \
+    cpd_tags["TO"].prob("VB") * cpd_tagsw["VB"].prob("race") * \
+    cpd_tags["VB"].prob("END")
+
+
+print( "The probability of the tag sequence 'START PP VB PP NN END' for 'I saw her duck' is:", prob_tagsequence)
+
+prob_tagsequence = cpd_tags["START"].prob("PP") * cpd_tagsw["PP"].prob("I") * \
+    cpd_tags["PP"].prob("VB") * cpd_tagsw["VB"].prob("saw") * \
+    cpd_tags["VB"].prob("PP") * cpd_tagsw["PP"].prob("her") * \
+    cpd_tags["PP"].prob("VB") * cpd_tagsw["VB"].prob("duck") * \
+    cpd_tags["VB"].prob("END")
+
+print( "The probability of the tag sequence 'START PP VB PP VB END' for 'I saw her duck' is:", prob_tagsequence)
+
+
+# Now implement virtebi algorithm
+distinct_tags = {'NN','RP','PR','WP','DT','VB','RB','JJ','CC','IN','UH'}
+
+#sentence = ["I", "want", "to", "race" ]
+#sentence = ["I", "saw", "her", "duck" ]
+# here for some entries we are getting tags as words 
+sentence = [word for (tag, word) in sent ]
+print sentence
+sentlen = len(sentence)
+
+# viterbi:
+# for each step i in 1 .. sentlen,
+# store a dictionary
+# that maps each tag X
+# to the probability of the best tag sequence of length i that ends in X
+viterbi = [ ]
+
+# backpointer:
+# for each step i in 1..sentlen,
+# store a dictionary
+# that maps each tag X
+# to the previous tag in the best tag sequence of length i that ends in X
+backpointer = [ ]
+
+first_viterbi = { }
+first_backpointer = { }
+for tag in distinct_tags:
+    # don't record anything for the START tag
+    if tag == "START": continue
+    first_viterbi[ tag ] = cpd_tags["START"].prob(tag) * cpd_tagsw[tag].prob( sentence[0] )
+    first_backpointer[ tag ] = "START"
+
+print(first_viterbi)
+print(first_backpointer)
+    
+viterbi.append(first_viterbi)
+backpointer.append(first_backpointer)
+
+currbest = max(first_viterbi.keys(), key = lambda tag: first_viterbi[ tag ])
+print( "Word", "'" + sentence[0] + "'", "current best two-tag sequence:", first_backpointer[ currbest], currbest)
+# print( "Word", "'" + sentence[0] + "'", "current best tag:", currbest)
+
+for wordindex in range(1, len(sentence)):
+    this_viterbi = { }
+    this_backpointer = { }
+    prev_viterbi = viterbi[-1]
+    
+    for tag in distinct_tags:
+        # don't record anything for the START tag
+        if tag == "START": continue
+
+        # if this tag is X and the current word is w, then 
+        # find the previous tag Y such that
+        # the best tag sequence that ends in X
+        # actually ends in Y X
+        # that is, the Y that maximizes
+        # prev_viterbi[ Y ] * P(X | Y) * P( w | X)
+        # The following command has the same notation
+        # that you saw in the sorted() command.
+        best_previous = max(prev_viterbi.keys(),
+                            key = lambda prevtag: \
+            prev_viterbi[ prevtag ] * cpd_tags[prevtag].prob(tag) * cpd_tagsw[tag].prob(sentence[wordindex]))
+
+        # Instead, we can also use the following longer code:
+        # best_previous = None
+        # best_prob = 0.0
+        # for prevtag in distinct_tags:
+        #    prob = prev_viterbi[ prevtag ] * cpd_tags[prevtag].prob(tag) * cpd_tagwords[tag].prob(sentence[wordindex])
+        #    if prob > best_prob:
+        #        best_previous= prevtag
+        #        best_prob = prob
+        #
+        this_viterbi[ tag ] = prev_viterbi[ best_previous] * \
+            cpd_tags[ best_previous ].prob(tag) * cpd_tagsw[ tag].prob(sentence[wordindex])
+        this_backpointer[ tag ] = best_previous
+
+    currbest = max(this_viterbi.keys(), key = lambda tag: this_viterbi[ tag ])
+    print( "Word", "'" + sentence[ wordindex] + "'", "current best two-tag sequence:", this_backpointer[ currbest], currbest)
+    # print( "Word", "'" + sentence[ wordindex] + "'", "current best tag:", currbest)
+
+
+    # done with all tags in this iteration
+    # so store the current viterbi step
+    viterbi.append(this_viterbi)
+    backpointer.append(this_backpointer)
+
+
+# done with all words in the sentence.
+# now find the probability of each tag
+# to have "END" as the next tag,
+# and use that to find the overall best sequence
+prev_viterbi = viterbi[-1]
+best_previous = max(prev_viterbi.keys(),
+                    key = lambda prevtag: prev_viterbi[ prevtag ] * cpd_tags[prevtag].prob("END"))
+
+prob_tagsequence = prev_viterbi[ best_previous ] * cpd_tags[ best_previous].prob("END")
+
+# best tagsequence: we store this in reverse for now, will invert later
+best_tagsequence = [ "END", best_previous ]
+# invert the list of backpointers
+backpointer.reverse()
+
+# go backwards through the list of backpointers
+# (or in this case forward, because we have inverter the backpointer list)
+# in each case:
+# the following best tag is the one listed under
+# the backpointer for the current best tag
+current_best_tag = best_previous
+for bp in backpointer:
+    best_tagsequence.append(bp[current_best_tag])
+    current_best_tag = bp[current_best_tag]
+
+best_tagsequence.reverse()
+#print( "The sentence was:", end = " ")
+print( "The sentence was:") #, end = " ")
+print( "The sentence was:")
+#for w in sentence: print( w, end = " ")
+for w in sentence: print( w)
+print("\n")
+#print( "The best tag sequence is:", end = " ")
+print( "The best tag sequence is:")
+#for t in best_tagsequence: print (t, end = " ")
+for t in best_tagsequence: print (t)
+print("\n")
+print( "The probability of the best tag sequence is:", prob_tagsequence)
 
